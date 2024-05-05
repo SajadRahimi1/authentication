@@ -1,0 +1,6 @@
+@Api_HostAddress = http://localhost:5020
+
+POST {{Api_HostAddress}}/api/User/create
+Accept: application/json
+Authorization: Bearer Dk5MjkzNX0.KVUiJSJ2gOp4Icox7kzjdrnylpf3Y-2b8PgKegiwR-A
+###
