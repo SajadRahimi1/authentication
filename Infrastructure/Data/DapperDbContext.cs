@@ -8,11 +8,8 @@ public class DapperContext
 {
     private readonly IDbConnection? _connection;
 
-    private static DapperContext? _instance = null;
 
-    public static DapperContext Instance => _instance ??= new DapperContext();
-
-    private DapperContext()
+    public DapperContext()
     {
         var connectionString = SandBoxManager.DataBaseConnection();
         _connection=new SqlConnection(connectionString);

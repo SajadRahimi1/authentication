@@ -26,4 +26,12 @@ public class JwtService
         );
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+
+    public static string GetRole(string jwtToken)
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var jwtSecurityToken = handler.ReadJwtToken(jwtToken);
+
+        return jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Role).Value;
+    }
 }

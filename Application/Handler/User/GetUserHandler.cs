@@ -17,15 +17,15 @@ public class GetUserHandler(IUnitOfWork unitOfWork):IRequestHandler<GetUserComma
             return response;
         }
 
-        request.password = PasswordEncoder.EncodePasswordToBase64(request.password);
-        if (request.password == user.Password)
+        var verifyPassword = PasswordEncoder.VerifyPassword(request.password,user.Password);
+        if (verifyPassword)
         {
             return new GetUserResponse
             {
                 Username = request.username,
                 Message = "login successful",
                 Id = user.Id,
-                Token = JwtService.GenerateToken(user.UserName,Enum.GetName(typeof(RoleEnum),user.Role))
+                Token = JwtService.GenerateToken(user.UserName,user.Role.ToString())
             };
         }
 

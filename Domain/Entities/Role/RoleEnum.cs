@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities.User;
+﻿namespace Domain.Entities.Role;
 
 public enum RoleEnum
 {

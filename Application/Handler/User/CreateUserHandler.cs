@@ -9,7 +9,7 @@ public class CreateUserHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreateU
 {
     public async Task<CreateUserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        request.password = PasswordEncoder.EncodePasswordToBase64(request.password);
+        request.password = PasswordEncoder.EncodePassword(request.password);
         var user =await unitOfWork.UserRepository.GetUserByUserName(request.userName);
         
         if (user is not null)
@@ -21,11 +21,11 @@ public class CreateUserHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreateU
         {
             Password = request.password,
             UserName = request.userName,
-            Role =request.RoleEnum
+            Role = request.RoleId,
         });
         return new CreateUserResponse()
         {
-            Messgae = "Created Successful", UserName = request.userName, RoleEnum = request.RoleEnum, Id = userId
+            Messgae = "Created Successful", UserName = request.userName,  Id = userId
         };
     }
 }
@@ -34,13 +34,13 @@ public class CreateUserCommand : IRequest<CreateUserResponse>
 {
     public string userName { get; set; }
     public string password { get; set; }
-    public RoleEnum RoleEnum { get; set; }
+    
+    public int RoleId { get; set; }
 }
 
 public class CreateUserResponse
 {
     public int Id { get; set; }
     public string UserName { get; set; }
-    public RoleEnum RoleEnum { get; set; }
     public string Messgae { get; set; }
 }

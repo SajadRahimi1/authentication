@@ -8,7 +8,7 @@ namespace Infrastructure.Repositories.User;
 
 public class UserRepository : IUserRepository
 {
-    private readonly IDbConnection _dbConnection = DapperContext.Instance.CreateConnection();
+    private readonly IDbConnection _dbConnection = new DapperContext().CreateConnection();
 
     public async Task<UserEntity?> GetUserByUserName(string username)
     {

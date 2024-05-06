@@ -4,7 +4,7 @@ namespace Utility.Setting;
 
 public class SandBoxManager
 {
-    static string ConnectionJson = Path.Combine(Directory.GetCurrentDirectory(), "SandBox\\Connection.json");
+    static string ConnectionJson = Path.Combine(Directory.GetCurrentDirectory(), "SandBox/connection.json");
 
     public static string DataBaseConnection()
     {

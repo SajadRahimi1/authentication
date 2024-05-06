@@ -1,23 +1,20 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using DevOne.Security.Cryptography.BCrypt;
 
 namespace Utility.Helper;
 
 public class PasswordEncoder
 {
-    public static int keySize = 64;
-    public static int  iterations = 158000;
-    public static string EncodePasswordToBase64(string password, out byte[] salt)
+    public static string EncodePassword(string password)
     {
-        salt = RandomNumberGenerator.GetBytes(keySize);
-        var hash = Rfc2898DeriveBytes.Pbkdf2(Encoding.UTF8.GetBytes(password), salt, iterations,
-            HashAlgorithmName.SHA512, keySize);
-        return Convert.ToHexString(hash);
+       var salt = BCryptHelper.GenerateSalt();
+        var hash = BCryptHelper.HashPassword(password, salt);
+        return hash;
     }
     
-    public static bool VerifyPassword(string password, string hash, byte[] salt)
+    public static bool VerifyPassword(string password, string hash)
     {
-        var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, HashAlgorithmName.SHA512, keySize);
-        return CryptographicOperations.FixedTimeEquals(hashToCompare, Convert.FromHexString(hash));
+       return BCryptHelper.CheckPassword(password, hash);
     }
 }
